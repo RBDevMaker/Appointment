@@ -5,8 +5,12 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import messages
 from django.utils import timezone
+import boto3
 
 from .models import Service, Hairdresser, Appointment
+
+dynamodb = boto3.client("dynamodb")
+
 
 def intervals_overlap(startime_1, end1, startime_2, end2):
     "Check if one interval starts after the other one ends"
@@ -38,6 +42,9 @@ def index(request, service_id=None, hairdresser_id=None, date_string=None):
     "View for selecting service, hairdresser, date and time"
     services = Service.objects.all()
     context = {"services_all": services}
+
+    announcements = dynamodb.scan(TableName="DEV_Announcement")
+    context["announcements"] = [a['Contents']['S'] for a in announcements['Items']]
 
     if service_id:
         context["selected_service_id"] = service_id
