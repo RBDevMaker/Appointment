@@ -55,4 +55,15 @@ class AppointmentsIndexViewTests(TestCase):
             },
         )
 
-        # FIX THIS: Test that the time is no longer available.
+        # Verify the appointment was created and redirected.
+        self.assertEqual(response.status_code, 302)
+        
+        # Test that the time is no longer available.
+        response = self.client.get(
+            reverse("index-date", args=(SERVICE_HAIRCUT, HAIRDRESSER_1, first_date))
+        )
+        
+        # Find the 12:00 time slot and verify it's blocked.
+        start_times = response.context["start_times_all"]
+        midday_slot = [slot for slot in start_times if slot["time_formatted"] == appt_time][0]
+        self.assertTrue(midday_slot["is_blocked"])
