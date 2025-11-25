@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - pip3 install -r requirements-dev.txt
+      - pip3 install boto3 django-iam-dbauth
+
+  build:
+    commands:
+      - echo "Running Django migrations..."
+      - python manage.py migrate
+      - echo "Listing tables..."
+      - python manage.py dbshell --command="SHOW TABLES;"
+
+env:
+  variables:
+    DATABASE_HOST: "webhost-mydb-gtomgss6desb.c6raww6uqmxp.us-east-1.rds.amazonaws.com"
+    DATABASE_USER: "appointments_admin"
+    DATABASE_DB_NAME: "Appointments"
