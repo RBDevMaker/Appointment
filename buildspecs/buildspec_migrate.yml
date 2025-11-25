@@ -17,6 +17,8 @@ phases:
       - python manage.py migrate
       - echo "Listing tables..."
       - mysql -h $DATABASE_HOST -u $DATABASE_USER -p$DATABASE_PASSWORD Appointments -e "SHOW TABLES;"
+      - echo "Querying appointments..."
+      - mysql -h $DATABASE_HOST -u $DATABASE_USER -p$DATABASE_PASSWORD Appointments -e "SELECT * FROM appointments_appointment;"
 
 env:
   variables:
