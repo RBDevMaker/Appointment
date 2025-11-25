@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       python: 3.11
     commands:
-      - yum install -y mysql
+      - yum install -y mariadb105
       - pip3 install -r requirements-dev.txt
       - pip3 install boto3 django-iam-dbauth pymysql cryptography
 
