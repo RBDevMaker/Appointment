@@ -92,19 +92,35 @@ if (
     import pymysql
     pymysql.install_as_MySQLdb()
     
-    DATABASES = {
-        "default": {
-            "HOST": os.environ["DATABASE_HOST"],
-            "USER": os.environ["DATABASE_USER"],
-            "NAME": os.environ["DATABASE_DB_NAME"],
-            "ENGINE": "django_iam_dbauth.aws.mysql",
-            "OPTIONS": {
-                "sql_mode": "traditional",
-                "use_iam_auth": True,
-                "ssl": {"ssl_mode": "REQUIRED"},
-            },
+    # Use IAM auth if no password provided, otherwise use password
+    if "DATABASE_PASSWORD" in os.environ:
+        DATABASES = {
+            "default": {
+                "ENGINE": "django.db.backends.mysql",
+                "HOST": os.environ["DATABASE_HOST"],
+                "USER": os.environ["DATABASE_USER"],
+                "PASSWORD": os.environ["DATABASE_PASSWORD"],
+                "NAME": os.environ["DATABASE_DB_NAME"],
+                "OPTIONS": {
+                    "sql_mode": "traditional",
+                    "ssl": {"ssl_mode": "REQUIRED"},
+                },
+            }
         }
-    }
+    else:
+        DATABASES = {
+            "default": {
+                "ENGINE": "django_iam_dbauth.aws.mysql",
+                "HOST": os.environ["DATABASE_HOST"],
+                "USER": os.environ["DATABASE_USER"],
+                "NAME": os.environ["DATABASE_DB_NAME"],
+                "OPTIONS": {
+                    "sql_mode": "traditional",
+                    "use_iam_auth": True,
+                    "ssl": {"ssl_mode": "REQUIRED"},
+                },
+            }
+        }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
