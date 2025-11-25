@@ -101,7 +101,7 @@ if (
             "OPTIONS": {
                 "sql_mode": "traditional",
                 "use_iam_auth": True,
-                "ssl_mode": "REQUIRED",
+                "ssl": {"ssl_mode": "REQUIRED"},
             },
         }
     }
