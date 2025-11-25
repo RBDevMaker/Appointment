@@ -5,15 +5,18 @@ phases:
     runtime-versions:
       python: 3.11
     commands:
+      - yum install -y mysql
       - pip3 install -r requirements-dev.txt
       - pip3 install boto3 django-iam-dbauth pymysql cryptography
 
   build:
     commands:
+      - echo "Creating database if it doesn't exist..."
+      - mysql -h $DATABASE_HOST -u $DATABASE_USER -p$DATABASE_PASSWORD -e "CREATE DATABASE IF NOT EXISTS Appointments;"
       - echo "Running Django migrations..."
       - python manage.py migrate
       - echo "Listing tables..."
-      - python manage.py dbshell --command="SHOW TABLES;"
+      - mysql -h $DATABASE_HOST -u $DATABASE_USER -p$DATABASE_PASSWORD Appointments -e "SHOW TABLES;"
 
 env:
   variables:
