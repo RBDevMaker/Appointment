@@ -5,8 +5,9 @@ phases:
     runtime-versions:
       python: 3.11
     commands:
+      - yum install -y mysql-devel gcc python3-devel
       - pip3 install -r requirements-dev.txt
-      - pip3 install boto3 django-iam-dbauth
+      - pip3 install boto3 django-iam-dbauth mysqlclient
 
   build:
     commands:
