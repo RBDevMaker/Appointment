@@ -89,12 +89,15 @@ if (
     and "DATABASE_USER" in os.environ
     and "DATABASE_DB_NAME" in os.environ
 ):
+    import pymysql
+    pymysql.install_as_MySQLdb()
+    
     DATABASES = {
         "default": {
             "HOST": os.environ["DATABASE_HOST"],
             "USER": os.environ["DATABASE_USER"],
             "NAME": os.environ["DATABASE_DB_NAME"],
-           "ENGINE": "django_iam_dbauth.aws.mysql",
+            "ENGINE": "django_iam_dbauth.aws.mysql",
             "OPTIONS": {
                 "sql_mode": "traditional",
                 "use_iam_auth": True,
