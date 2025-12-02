@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appointments-app
+  labels:
+    app: appointments
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: appointments
+  template:
+    metadata:
+      labels:
+        app: appointments
+    spec:
+      containers:
+        - name: appointments
+          image: 995507554189.dkr.ecr.us-east-1.amazonaws.com/containers-image-repository:latest
+          ports:
+            - containerPort: 8088
+          env:
+            - name: DATABASE_HOST
+              value: "webhost-mydb-gtomgss6desb.c6raww6uqmxp.us-east-1.rds.amazonaws.com"
+            - name: DATABASE_USER
+              value: "dbadmin"
+            - name: DATABASE_DB_NAME
+              value: "Appointments"
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: password
+            - name: AWS_DEFAULT_REGION
+              value: "us-east-1"
