@@ -38,7 +38,7 @@ SECONDARY_COLOR = os.environ.get('SECONDARY_COLOR', '#d4af37')  # Default: rose 
 ACCENT_COLOR = os.environ.get('ACCENT_COLOR', '#fce4ec')  # Default: soft blush
 BACKGROUND_COLOR = os.environ.get('BACKGROUND_COLOR', '#f0e6d8')  # Default: warm beige
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
 CSRF_TRUSTED_ORIGINS = ['https://*.amazonaws.com', 'http://127.0.0.1', 'http://localhost', 'https://*.cloudfront.net/']
 
