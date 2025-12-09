@@ -42,11 +42,10 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.amazonaws.com',
+    'https://*.elb.amazonaws.com',
     'http://127.0.0.1',
     'http://localhost',
-    'https://*.cloudfront.net',
-    'https://*.railway.app',
-    'https://*.up.railway.app'
+    'https://*.cloudfront.net'
 ]
 
 

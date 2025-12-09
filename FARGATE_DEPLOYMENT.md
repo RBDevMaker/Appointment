@@ -66,10 +66,14 @@ aws ecs create-service \
 ```
 
 ## Step 9: Update ALLOWED_HOSTS
-Add your ALB DNS name to Railway environment variables:
+Add your ALB DNS name to the task definition environment variables in task-definition.json:
+```json
+{
+    "name": "ALLOWED_HOSTS",
+    "value": "your-alb-name.us-east-1.elb.amazonaws.com"
+}
 ```
-ALLOWED_HOSTS=your-alb-name.us-east-1.elb.amazonaws.com
-```
+Or update it after deployment using AWS Console → ECS → Task Definition → Create new revision.
 
 ## Cost Estimate
 - Fargate: ~$15-20/month (0.25 vCPU, 0.5 GB)
