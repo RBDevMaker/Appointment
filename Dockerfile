@@ -20,4 +20,4 @@ COPY . .
 EXPOSE 8088
 
 # Run the application
-CMD python manage.py migrate && gunicorn hairdresser_django.wsgi:application --bind 0.0.0.0:$PORT
+CMD ["sh", "-c", "python manage.py migrate && gunicorn hairdresser_django.wsgi:application --bind 0.0.0.0:${PORT:-8000}"]
