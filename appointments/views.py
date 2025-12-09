@@ -6,10 +6,15 @@ from django.urls import reverse
 from django.contrib import messages
 from django.utils import timezone
 import boto3
+from botocore.exceptions import NoRegionError
 
 from .models import Service, Hairdresser, Appointment
 
-dynamodb = boto3.client("dynamodb")
+# Try to create DynamoDB client, but don't fail if AWS not configured
+try:
+    dynamodb = boto3.client("dynamodb", region_name="us-east-1")
+except Exception:
+    dynamodb = None
 
 
 def intervals_overlap(startime_1, end1, startime_2, end2):
@@ -43,8 +48,12 @@ def index(request, service_id=None, hairdresser_id=None, date_string=None):
     services = Service.objects.all()
     context = {"services_all": services}
 
-    announcements = dynamodb.scan(TableName="DEV_Announcement")
-    context["announcements"] = [a['Contents']['S'] for a in announcements['Items']]
+    # Try to get announcements from DynamoDB, but don't fail if not available
+    try:
+        announcements = dynamodb.scan(TableName="DEV_Announcement")
+        context["announcements"] = [a['Contents']['S'] for a in announcements['Items']]
+    except Exception:
+        context["announcements"] = []
 
     if service_id:
         context["selected_service_id"] = service_id
