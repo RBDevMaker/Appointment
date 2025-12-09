@@ -1,0 +1,57 @@
+{
+    "family": "luxe-hair-studio",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "containerDefinitions": [
+        {
+            "name": "django-app",
+            "image": "<YOUR_ECR_IMAGE_URI>",
+            "portMappings": [
+                {
+                    "containerPort": 8000,
+                    "protocol": "tcp"
+                }
+            ],
+            "environment": [
+                {
+                    "name": "DEBUG",
+                    "value": "False"
+                },
+                {
+                    "name": "BUSINESS_TYPE",
+                    "value": "hairdresser"
+                },
+                {
+                    "name": "BUSINESS_NAME",
+                    "value": "Luxe Hair Studio"
+                },
+                {
+                    "name": "PROVIDER_TITLE",
+                    "value": "Hairdresser"
+                },
+                {
+                    "name": "PROVIDER_TITLE_PLURAL",
+                    "value": "Hairdressers"
+                }
+            ],
+            "secrets": [
+                {
+                    "name": "SECRET_KEY",
+                    "valueFrom": "arn:aws:secretsmanager:REGION:ACCOUNT:secret:django-secret-key"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/luxe-hair-studio",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        }
+    ]
+}
