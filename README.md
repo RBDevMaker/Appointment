@@ -1,116 +1,101 @@
-✨ Luxe Hair Studio – Appointment Booking App
+# ✨ Luxe Hair Studio – Appointment Booking App
 
-A beautifully designed hair studio booking system featuring AWS App Runner deployment, Docker, and a fully automated CI/CD pipeline powered by GitHub Actions.
+A beautifully designed hair studio booking system featuring **AWS App Runner deployment, Docker**, and a fully automated **CI/CD pipeline** powered by GitHub Actions.
 
-🚀 CI/CD Pipeline – Fully Automated
+## 🚀 CI/CD Pipeline – Fully Automated
 
-Your pipeline is now live!
-Whenever you push to the main branch`:
+Whenever you push to the **main branch**:
 
-GitHub Actions builds your Docker image
+**1. GitHub Actions** builds your Docker image
 
-Pushes the image to Amazon ECR
+**2.** Pushes the image to **Amazon ECR**
 
-App Runner pulls the new image and deploys automatically
+**3. App Runner** pulls the new image and deploys automatically
 
-🔍 To watch your pipeline in action:
+## 🔍 Pipeline in action:
 
-Open your GitHub repo → Actions tab
+- Open GitHub repo → **Actions**tab
 
-You’ll see the workflow: “Deploy to AWS App Runner”
+- See the workflow: **“Deploy to AWS App Runner”**
 
-Make any small change (e.g., update text or a color), push it — the app redeploys automatically!
+- Make any small change (e.g., update text or a color), push it — the app redeploys automatically!
 
-🌐 Your App Now Has:
+## 💇‍♀️ Current Features
+### 🗓️ Booking System
 
-✅ Live on AWS App Runner
+- View available stylists: **Ann** and **Jackie**
 
-✅ Beautiful pink & rose-gold theme 
+- Browse each stylist’s available time slots
 
-✅ Fully automated CI/CD pipeline
+- Select appointment date from a calendar
 
-✅ Secure HTTPS endpoint
+- Book using **name + contact details**
 
-💇‍♀️ Current Features
-🗓️ Booking System
+- **12-hour time format** (e.g., 9:00 AM)
 
-View available stylists: Ann and Jackie
+- All appointments stored in SQLite
 
-Browse each stylist’s available time slots
+- Email appointment confirmations
 
-Select appointment date from a calendar
+- SMS reminders
 
-Book using name + contact details
+- Online payments
 
-12-hour time format (e.g., 9:00 AM)
+- Admin dashboard for managing appointments
 
-All appointments stored in SQLite
+- Customer accounts / login
 
-Email appointment confirmations
+- Appointment cancellation
 
-SMS reminders
+- Recurring appointments
 
-Online payments
+- Select services (cut, color, style, etc.)
 
-Admin dashboard for managing appointments
+- Pricing display
 
-Customer accounts / login
+### 🎨 Design & UI
 
-Appointment cancellation
+- **Soft pink** #f5a3b8 and **rose gold** #d4af37 
 
-Recurring appointments
+- Warm beige background for a cozy feel
 
-Select services (cut, color, style, etc.)
+- Headers in **Playfair Display**
+  
+- Smooth hover animations
 
-Pricing display
+- Responsive stylist cards
 
-🎨 Design & UI
+- Designed for both **hair** and **nail** salons
 
-Soft pink #f5a3b8 and rose gold #d4af37
+### 🛠 Technical Overview
 
-Warm beige background for a cozy feel
+- Backend: **Django**
 
-Titles in Great Vibes
+- Database: **SQLite** (local storage)
 
-Headers in Playfair Display
+- Deployment: **AWS App Runner**
 
-Smooth hover animations
+- CI/CD: GitHub Actions → Build → Docker → Push to ECR → App Runner Deploy
 
-Responsive stylist cards
+- Environment variables for configuration
 
-Designed for both hair and nail salons
+- Dockerized for consistent deployment
 
-🛠 Technical Overview
+- Supports multiple business themes (hair or nail studios)
 
-Backend: Django
+### 🧱 Tech Stack
 
-Database: SQLite (local storage)
+- **Python / Django**
 
-Deployment: AWS App Runner
+- **HTML / CSS / JavaScript**
 
-CI/CD: GitHub Actions + Amazon ECR
+- **Docker**
 
-Static file handling with WhiteNoise
+- **GitHub Actions**
 
-Environment variables for configuration
+- **Amazon ECR**
 
-Dockerized for consistent deployment
-
-Supports multiple business themes (hair or nail studios)
-
-🧱 Tech Stack
-
-Python / Django
-
-HTML / CSS / JavaScript
-
-Docker
-
-GitHub Actions
-
-Amazon ECR
-
-AWS App Runner
+- **AWS App Runner**
 
 ![Python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)
 ![Django](https://img.shields.io/badge/Django-4.x-092E20?logo=django&logoColor=white)
@@ -118,14 +103,8 @@ AWS App Runner
 ![AWS](https://img.shields.io/badge/AWS-App%20Runner-FF9900?logo=amazonaws&logoColor=white)
 ![ECR](https://img.shields.io/badge/AWS-ECR-FF9900?logo=amazonaws&logoColor=white)
 
-💻 Local Development
-git clone <your-repo-url>
-cd luxe-hair-studio
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
 
-🚀 Deployment Workflow
+## 🚀 Deployment Workflow
 
 Triggered automatically on push to main:
 
