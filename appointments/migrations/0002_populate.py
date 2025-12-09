@@ -8,8 +8,8 @@ def populate(apps, schema_editor):
     Data.objects.create(service_name="Shampoo and Style", description="Shampoo and styling service", price=35.00, duration=30)
 
     Data = apps.get_model("appointments", "Hairdresser")
-    Data.objects.create(first_name="Hairdresser", last_name="One")
-    Data.objects.create(first_name="Hairdresser", last_name="Two")
+    Data.objects.create(first_name="Ann", last_name="")
+    Data.objects.create(first_name="Jackie", last_name="")
 
 class Migration(migrations.Migration):
 
