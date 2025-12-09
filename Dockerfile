@@ -16,8 +16,11 @@ RUN pip install --no-cache-dir -r requirements-dev.txt \
 # Copy application code
 COPY . .
 
-# Expose port
-EXPOSE 8088
+# Collect static files
+RUN python manage.py collectstatic --noinput
 
-# Run the application
-CMD ["sh", "-c", "python manage.py migrate && gunicorn hairdresser_django.wsgi:application --bind 0.0.0.0:${PORT:-8000}"]
+# Expose port (Railway will override with PORT env var)
+EXPOSE 8000
+
+# Run migrations and start gunicorn
+CMD python manage.py migrate && gunicorn hairdresser_django.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120

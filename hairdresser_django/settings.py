@@ -40,7 +40,14 @@ BACKGROUND_COLOR = os.environ.get('BACKGROUND_COLOR', '#f0e6d8')  # Default: war
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
-CSRF_TRUSTED_ORIGINS = ['https://*.amazonaws.com', 'http://127.0.0.1', 'http://localhost', 'https://*.cloudfront.net/']
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.amazonaws.com',
+    'http://127.0.0.1',
+    'http://localhost',
+    'https://*.cloudfront.net',
+    'https://*.railway.app',
+    'https://*.up.railway.app'
+]
 
 
 # Application definition
