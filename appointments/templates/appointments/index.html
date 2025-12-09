@@ -41,7 +41,7 @@
 <hr>
 
 {% if hairdressers_all %}
-<h2 id="hairdresser">Hairdressers</h2>
+<h2 id="hairdresser">{{ PROVIDER_TITLE_PLURAL }}</h2>
 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
     {% for hairdresser in hairdressers_all %}
     <div class="col">
@@ -100,7 +100,7 @@
         </div>
     </div>
 
-    <input type="submit" class="btn btn-primary" value="Confirm">
+    <input type="submit" class="btn btn-primary btn-confirm" value="Confirm">
 </form>
 <hr>
 {% endif %}

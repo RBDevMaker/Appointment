@@ -34,7 +34,7 @@ def build_start_times(day_start, service_duration, blocked_times):
                     is_blocked = True
 
         start_times.append(
-            {"time_formatted": time_1.strftime("%H:%M"), "is_blocked": is_blocked}
+            {"time_formatted": time_1.strftime("%I:%M %p"), "is_blocked": is_blocked}
         )
     return start_times
 
@@ -104,7 +104,7 @@ def create(request):
         hairdresser = Hairdresser.objects.get(hairdresser_id=hairdresser_id)
         start_datetime = timezone.make_aware(
             datetime.datetime.strptime(
-                date_string + " " + appointment_time, "%Y%m%d %H:%M"
+                date_string + " " + appointment_time, "%Y%m%d %I:%M %p"
             )
         )
         end_datetime = start_datetime + datetime.timedelta(minutes=service.duration)

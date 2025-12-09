@@ -21,10 +21,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-pzza694=ew*esxkv0ebe$ou@awr$a^mh-9u2p42)&%4$2izb1z'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-pzza694=ew*esxkv0ebe$ou@awr$a^mh-9u2p42)&%4$2izb1z')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+
+# Business configuration
+BUSINESS_TYPE = os.environ.get('BUSINESS_TYPE', 'hairdresser')  # or 'nail'
+BUSINESS_NAME = os.environ.get('BUSINESS_NAME', 'Hair Salon')
+PROVIDER_TITLE = os.environ.get('PROVIDER_TITLE', 'Hairdresser')  # or 'Nail Technician'
+PROVIDER_TITLE_PLURAL = os.environ.get('PROVIDER_TITLE_PLURAL', 'Hairdressers')  # or 'Nail Technicians'
+
+# Color scheme configuration
+PRIMARY_COLOR = os.environ.get('PRIMARY_COLOR', '#f5a3b8')  # Default: pink
+SECONDARY_COLOR = os.environ.get('SECONDARY_COLOR', '#d4af37')  # Default: rose gold
+ACCENT_COLOR = os.environ.get('ACCENT_COLOR', '#fce4ec')  # Default: soft blush
+BACKGROUND_COLOR = os.environ.get('BACKGROUND_COLOR', '#f0e6d8')  # Default: warm beige
 
 ALLOWED_HOSTS = ['*']
 
@@ -45,6 +57,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -66,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'appointments.context_processors.business_config',
             ],
         },
     },
@@ -157,6 +171,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# WhiteNoise configuration for serving static files
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
