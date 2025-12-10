@@ -216,22 +216,11 @@
   <div class="container my-5">
     <header class="text-center mb-5 position-relative">
       <div class="admin-info d-flex justify-content-end align-items-center mb-3">
-        <button type="button" class="btn btn-sm me-2" data-bs-toggle="modal" data-bs-target="#adminModal" style="background: linear-gradient(135deg, rgba(255, 232, 240, 0.8) 0%, rgba(255, 212, 229, 0.8) 100%); 
-                 border: 2px solid var(--rose-gold); 
-                 color: var(--rose-gold); 
-                 font-weight: 600;
-                 transition: all 0.3s ease;"
-          onmouseover="this.style.background='linear-gradient(135deg, #ffd4e5 0%, #ffb3d1 100%)'; this.style.transform='translateY(-2px)'"
-          onmouseout="this.style.background='linear-gradient(135deg, rgba(255, 232, 240, 0.8) 0%, rgba(255, 212, 229, 0.8) 100%)'; this.style.transform='translateY(0)'">
-          <i class="bi bi-scissors me-1" style="color: var(--rose-gold);"></i>Admin Login
-        </button>
-        <a href="/admin/" class="admin-link text-decoration-none" title="Admin Dashboard">
-          <i class="bi bi-scissors" style="font-size: 1.8rem; color: var(--rose-gold); opacity: 0.9;"></i>
+        <a href="/admin/" class="btn btn-sm btn-outline-secondary">
+          <i class="bi bi-scissors me-1"></i>Admin
         </a>
       </div>
-      <h1 class="display-4 fw-bold text-primary" style="background: red; color: white; padding: 20px;">
-        🚨 EMERGENCY TEST - DEC 9 11:05 PM 🚨
-      </h1>
+      <h1 class="display-4 fw-bold text-primary">Luxe Hair Studio</h1>
       <!-- Cache buster: 2025-12-09 -->
       <p class="lead text-muted">Book Your Perfect Appointment</p>
     </header>
@@ -245,39 +234,7 @@
       </div>
     </footer>
   </div>
-  <!-- Admin Login Modal -->
-  <div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header"
-          style="background: linear-gradient(135deg, #ffd4e5 0%, #ffe8f0 100%); border-bottom: 2px solid var(--rose-gold);">
-          <h5 class="modal-title" id="adminModalLabel" style="color: var(--rose-gold); font-weight: 600;">
-            <i class="bi bi-scissors me-2"></i>Admin Login
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center" style="background: linear-gradient(135deg, #fff5f8 0%, #ffffff 100%);">
-          <div class="mb-3">
-            <label class="form-label" style="color: var(--rose-gold); font-weight: 500;">Username:</label>
-            <div class="alert alert-light mb-2" style="border: 2px solid var(--primary-pink); font-family: monospace;">
-              <strong>admin</strong>
-            </div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" style="color: var(--rose-gold); font-weight: 500;">Password:</label>
-            <div class="alert alert-light mb-2" style="border: 2px solid var(--primary-pink); font-family: monospace;">
-              <strong>LuxHair2025!</strong>
-            </div>
-          </div>
-          <div class="d-grid">
-            <a href="/admin/" class="btn btn-primary btn-lg">
-              Go to Admin Dashboard
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
