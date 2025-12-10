@@ -153,7 +153,8 @@
     {% endfor %}
     {% endif %}
 
-    <div id="login-form">
+    <form method="post" action="{% url 'admin:login' %}">
+        {% csrf_token %}
         <div class="form-row">
             <label for="{{ form.username.id_for_label }}" class="required">{{ form.username.label }}:</label>
             {{ form.username }}
@@ -162,7 +163,7 @@
             <label for="{{ form.password.id_for_label }}" class="required">{{ form.password.label }}:</label>
             {{ form.password }}
         </div>
-        {% url 'admin_password_reset' as password_reset_url %}
+        {% url 'admin:password_reset' as password_reset_url %}
         {% if password_reset_url %}
         <div class="password-reset-link">
             <a href="{{ password_reset_url }}" style="color: #d4af37; text-decoration: none;">{% trans 'Forgotten your
@@ -172,30 +173,7 @@
         <div class="submit-row">
             <input type="submit" value="{% trans 'Log in' %}" />
         </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Wrap the form
-            const form = document.querySelector('form');
-            const loginForm = document.getElementById('login-form');
-
-            // Move form elements into our custom div
-            const formElements = form.querySelectorAll('.form-row, .submit-row, .password-reset-link');
-            formElements.forEach(element => {
-                loginForm.appendChild(element);
-            });
-
-            // Set form attributes
-            form.method = 'post';
-            form.action = '';
-
-            // Add CSRF token
-            const csrfInput = form.querySelector('[name="csrfmiddlewaretoken"]');
-            if (csrfInput) {
-                loginForm.appendChild(csrfInput);
-            }
-        });
-    </script>
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
 </div>
 {% endblock %}
