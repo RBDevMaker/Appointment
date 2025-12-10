@@ -1,0 +1,30 @@
+{% extends "appointments/base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title">Cancel Appointment</h2>
+                <p>Are you sure you want to cancel this appointment?</p>
+
+                <div class="appointment-details">
+                    <p><strong>Service:</strong> {{ appointment.service.service_name }}</p>
+                    <p><strong>Provider:</strong> {{ appointment.hairdresser.first_name }} {{
+                        appointment.hairdresser.last_name }}</p>
+                    <p><strong>Date & Time:</strong> {{ appointment.start_datetime|date:"l, F j, Y" }} at {{
+                        appointment.start_datetime|date:"g:i A" }}</p>
+                    <p><strong>Price:</strong> ${{ appointment.service.price }}</p>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Yes, Cancel Appointment</button>
+                    <a href="{% url 'index' %}" class="btn btn-outline-secondary">No, Keep Appointment</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

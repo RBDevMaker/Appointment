@@ -17,4 +17,5 @@ urlpatterns = [
         name="index-date",
     ),
     path("create", views.create, name="create"),
+    path("cancel/<str:token>/", views.cancel, name="cancel"),
 ]

@@ -118,13 +118,45 @@ def create(request):
         )
         end_datetime = start_datetime + datetime.timedelta(minutes=service.duration)
 
-        Appointment.objects.create(
+        # Generate cancellation token
+        import secrets
+        cancellation_token = secrets.token_urlsafe(32)
+
+        appointment = Appointment.objects.create(
             service=service,
             hairdresser=hairdresser,
             start_datetime=start_datetime,
             end_datetime=end_datetime,
             customer_contact=customer_contact,
+            cancellation_token=cancellation_token,
         )
-        messages.info(request, "Your appointment has been created.")
+        
+        # Build cancellation URL
+        cancel_url = request.build_absolute_uri(
+            reverse("cancel", args=[cancellation_token])
+        )
+        
+        messages.info(
+            request, 
+            f"Your appointment has been created. To cancel, visit: {cancel_url}"
+        )
 
     return HttpResponseRedirect(reverse("index"))
+
+
+def cancel(request, token):
+    "View for cancelling an appointment"
+    try:
+        appointment = Appointment.objects.get(cancellation_token=token, is_cancelled=False)
+        
+        if request.method == "POST":
+            appointment.is_cancelled = True
+            appointment.save()
+            messages.success(request, "Your appointment has been cancelled.")
+            return HttpResponseRedirect(reverse("index"))
+        
+        return render(request, "appointments/cancel.html", {"appointment": appointment})
+    
+    except Appointment.DoesNotExist:
+        messages.error(request, "Invalid cancellation link or appointment already cancelled.")
+        return HttpResponseRedirect(reverse("index"))

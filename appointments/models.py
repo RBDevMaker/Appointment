@@ -33,6 +33,8 @@ class Appointment(models.Model):
     start_datetime = models.DateTimeField()
     end_datetime = models.DateTimeField()
     customer_contact = models.TextField()
+    is_cancelled = models.BooleanField(default=False)
+    cancellation_token = models.CharField(max_length=64, unique=True, null=True, blank=True)
 
     def __str__(self):
         return f"{self.service} - {self.start_datetime}"
