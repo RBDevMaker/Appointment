@@ -9,13 +9,13 @@ def populate_services(apps, schema_editor):
     services = [
         {
             'service_name': 'Weave Install With Closure',
-            'description': '$75 Deposit Required. $310 & UP! HAIR NOT INCLUDED. Includes Shampoo, conditioning, blow-dry, braid down, sew-in, flatiron/rollerset style. Hair is available for purchase. Pricing may increase based on density and length of hair.',
+            'description': '$75 Deposit Required. $310 & UP! Includes Shampoo, conditioning, blow-dry, braid down, sew-in, flatiron/rollerset style. Pricing may increase based on density and length of hair.',
             'price': 310.00,
             'duration': 150  # 2 hr 30 min
         },
         {
             'service_name': 'Wrap and Style (relaxed short hair)',
-            'description': 'Wrap and style for relaxed short hair.',
+            'description': 'Wrap and style for relaxed short hair. Trim is extra fee.',
             'price': 70.00,
             'duration': 60  # 1 hr
         },
