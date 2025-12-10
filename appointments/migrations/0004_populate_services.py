@@ -33,7 +33,7 @@ def populate_services(apps, schema_editor):
         },
         {
             'service_name': 'Shampoo Only',
-            'description': 'Pricing might increase based on density/length of hair and amount of product required for service.',
+            'description': 'Pricing might increase based on density/length of hair and amount of product required for service. Shampoo and Conditioner $35. Deep Conditioner $50. Extended Head Massage also available.',
             'price': 25.00,
             'duration': 20  # 20 min
         },
@@ -51,7 +51,7 @@ def populate_services(apps, schema_editor):
         },
         {
             'service_name': 'Color - Permanent Full Head',
-            'description': 'Full head color, extra tube - additional price.',
+            'description': 'Full head color, extra tube - add. price.',
             'price': 90.00,
             'duration': 90  # 1.5 hr
         },
