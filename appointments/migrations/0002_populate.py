@@ -10,6 +10,7 @@ def populate(apps, schema_editor):
     Data = apps.get_model("appointments", "Hairdresser")
     Data.objects.create(first_name="Ann", last_name="")
     Data.objects.create(first_name="Jackie", last_name="")
+    Data.objects.create(first_name="Judy", last_name="")
 
 class Migration(migrations.Migration):
 
