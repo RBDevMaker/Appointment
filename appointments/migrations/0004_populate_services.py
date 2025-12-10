@@ -15,7 +15,7 @@ def populate_services(apps, schema_editor):
         },
         {
             'service_name': 'Wrap and Style (relaxed short hair)',
-            'description': 'Wrap and style for relaxed short hair. Trim is extra fee.',
+            'description': 'Wrap and style for relaxed short hair. Trims are an extra fee of $35.00. Partially relaxed hair is extra per stylist discretion. Pincurls are $10 extra.',
             'price': 70.00,
             'duration': 60  # 1 hr
         },
