@@ -86,6 +86,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Temporary CSRF bypass for deployment issues
+if not DEBUG:
+    CSRF_COOKIE_DOMAIN = None
+    CSRF_COOKIE_PATH = '/'
+
 ROOT_URLCONF = 'hairdresser_django.urls'
 
 TEMPLATES = [

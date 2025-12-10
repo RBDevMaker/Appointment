@@ -124,6 +124,7 @@ def index(request, service_id=None, service_ids=None, hairdresser_id=None, date_
 
     return render(request, "appointments/index.html", context)
 
+@csrf_exempt
 def create(request):
     "View for creating an appointment"
     if request.method == "POST":
