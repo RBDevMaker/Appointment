@@ -216,9 +216,14 @@
   <div class="container my-5">
     <header class="text-center mb-5 position-relative">
       <div class="admin-info d-flex justify-content-end align-items-center mb-3">
-        <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal"
-          data-bs-target="#adminModal">
-          Admin Login
+        <button type="button" class="btn btn-sm me-2" data-bs-toggle="modal" data-bs-target="#adminModal" style="background: linear-gradient(135deg, rgba(255, 232, 240, 0.8) 0%, rgba(255, 212, 229, 0.8) 100%); 
+                 border: 2px solid var(--rose-gold); 
+                 color: var(--rose-gold); 
+                 font-weight: 600;
+                 transition: all 0.3s ease;"
+          onmouseover="this.style.background='linear-gradient(135deg, #ffd4e5 0%, #ffb3d1 100%)'; this.style.transform='translateY(-2px)'"
+          onmouseout="this.style.background='linear-gradient(135deg, rgba(255, 232, 240, 0.8) 0%, rgba(255, 212, 229, 0.8) 100%)'; this.style.transform='translateY(0)'">
+          <i class="bi bi-scissors me-1" style="color: var(--rose-gold);"></i>Admin Login
         </button>
         <a href="/admin/" class="admin-link text-decoration-none" title="Admin Dashboard">
           <i class="bi bi-scissors" style="font-size: 1.8rem; color: var(--rose-gold); opacity: 0.9;"></i>
