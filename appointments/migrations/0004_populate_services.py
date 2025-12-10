@@ -21,7 +21,7 @@ def populate_services(apps, schema_editor):
         },
         {
             'service_name': 'Up-Do',
-            'description': 'Up-do is an extra service to what the client is already getting. Pricing might increase based on density/length of hair and amount of product required for service.',
+            'description': 'Up-do is an extra service to what the client is already getting. Pricing might increase based on density/length of hair and amount of product required for service. Extra Hair is an additional fee.',
             'price': 40.00,
             'duration': 45  # 45 min
         },
