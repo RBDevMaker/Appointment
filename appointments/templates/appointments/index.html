@@ -129,11 +129,28 @@
 
 
 <div id="selected-services" class="mt-4 d-none">
-    <h4>Selected Services</h4>
-    <div id="selected-services-list" class="mb-3"></div>
-    <div class="d-flex justify-content-between align-items-center">
-        <strong>Total: $<span id="total-price">0.00</span></strong>
-        <a href="#hairdresser" class="btn btn-primary" id="continue-btn">Continue to Stylists</a>
+    <div class="card shadow-lg"
+        style="background: linear-gradient(135deg, #ffd4e5 0%, #ffe8f0 50%, #fff5f8 100%); border: 3px solid var(--rose-gold);">
+        <div class="card-header text-center"
+            style="background: linear-gradient(135deg, #d4af37 0%, #f5a3b8 100%); border-bottom: 2px solid var(--rose-gold);">
+            <h4 class="mb-0"
+                style="color: white; font-family: 'Playfair Display', serif; font-weight: 800; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                <i class="bi bi-check-circle-fill me-2"></i>Selected Services
+            </h4>
+        </div>
+        <div class="card-body">
+            <div id="selected-services-list" class="mb-3"></div>
+            <hr style="border-color: var(--rose-gold); border-width: 2px;">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"
+                    style="color: var(--rose-gold); font-family: 'Playfair Display', serif; font-weight: 700;">
+                    Total: $<span id="total-price" style="color: var(--rose-gold);">0.00</span>
+                </h5>
+                <a href="#hairdresser" class="btn btn-primary btn-lg" id="continue-btn">
+                    <i class="bi bi-arrow-right-circle me-2"></i>Continue to Stylists
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -190,7 +207,13 @@
             let total = 0;
 
             selectedServices.forEach(service => {
-                html += `<span class="badge bg-primary me-2 mb-2">${service.name} - $${service.price}</span>`;
+                html += `
+                    <div class="d-flex justify-content-between align-items-center mb-2 p-2 rounded" 
+                         style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(245, 163, 184, 0.1) 100%); border: 1px solid var(--rose-gold);">
+                        <span style="color: var(--rose-gold); font-weight: 600;">${service.name}</span>
+                        <span style="color: var(--rose-gold); font-weight: 700;">$${service.price}</span>
+                    </div>
+                `;
                 total += service.price;
             });
 
