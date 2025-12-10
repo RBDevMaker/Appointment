@@ -23,4 +23,4 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Run migrations and start gunicorn
-CMD python manage.py migrate && gunicorn hairdresser_django.wsgi:application --bind 0.0.0.0:8000 --workers 2 --timeout 120
+CMD python manage.py migrate && python manage.py create_superuser || true && gunicorn hairdresser_django.wsgi:application --bind 0.0.0.0:8000 --workers 2 --timeout 120

@@ -47,6 +47,22 @@ def build_start_times(day_start, service_duration, blocked_times):
 
 def index(request, service_id=None, service_ids=None, hairdresser_id=None, date_string=None):
     "View for selecting service, hairdresser, date and time"
+    
+    # Auto-create admin user if it doesn't exist
+    from django.contrib.auth.models import User
+    import os
+    username = os.environ.get('ADMIN_USERNAME', 'admin')
+    password = os.environ.get('ADMIN_PASSWORD', 'LuxHair2025!')
+    if not User.objects.filter(username=username).exists() and password:
+        try:
+            User.objects.create_superuser(
+                username=username,
+                email=os.environ.get('ADMIN_EMAIL', 'admin@luxehairstudio.com'),
+                password=password
+            )
+        except Exception:
+            pass  # Ignore errors, admin creation is optional
+    
     services = Service.objects.all()
     context = {"services_all": services}
 
@@ -217,3 +233,23 @@ def cancel(request, token):
     except Appointment.DoesNotExist:
         messages.error(request, "Invalid cancellation link or appointment already cancelled.")
         return HttpResponseRedirect(reverse("index"))
+
+def setup_admin(request):
+    """Create admin user - for initial setup only"""
+    from django.contrib.auth.models import User
+    import os
+    
+    username = os.environ.get('ADMIN_USERNAME', 'admin')
+    email = os.environ.get('ADMIN_EMAIL', 'admin@luxehairstudio.com')
+    password = os.environ.get('ADMIN_PASSWORD', 'LuxHair2025!')
+    
+    if User.objects.filter(username=username).exists():
+        return HttpResponse(f'Admin user "{username}" already exists!')
+    
+    User.objects.create_superuser(
+        username=username,
+        email=email,
+        password=password
+    )
+    
+    return HttpResponse(f'Admin user "{username}" created successfully! You can now login at /admin/')
