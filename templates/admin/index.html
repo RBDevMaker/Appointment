@@ -1,0 +1,51 @@
+{% extends "admin/index.html" %}
+{% load static %}
+
+{% block content %}
+{{ block.super }}
+
+<!-- Custom View Appointments Section -->
+<div class="module" style="margin-top: 20px;">
+    <table summary="Quick Actions">
+        <caption>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <span>Quick Actions</span>
+                <i class="bi bi-lightning-charge" style="color: var(--rose-gold);"></i>
+            </div>
+        </caption>
+        <tbody>
+            <tr class="model-appointment">
+                <th scope="row">
+                    <a href="/admin/appointments/appointment/" style="text-decoration: none;">
+                        <div style="display: flex; align-items: center; padding: 10px;">
+                            <i class="bi bi-calendar-check me-2"
+                                style="color: var(--primary-pink); font-size: 1.2rem;"></i>
+                            <span style="color: var(--rose-gold); font-weight: 600;">View Appointments</span>
+                        </div>
+                    </a>
+                </th>
+                <td>
+                    <a href="/admin/appointments/appointment/" class="addlink"
+                        style="background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%); border: 2px solid var(--primary-pink); color: var(--primary-pink); padding: 8px 16px; border-radius: 20px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;"
+                        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(245, 163, 184, 0.4)'"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                        View All Appointments
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<style>
+    :root {
+        --primary-pink: #f5a3b8;
+        --rose-gold: #d4af37;
+    }
+</style>
+{% endblock %}
