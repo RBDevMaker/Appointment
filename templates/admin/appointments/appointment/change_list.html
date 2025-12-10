@@ -38,5 +38,15 @@
         padding: 10px !important;
         border: 2px solid var(--rose-gold) !important;
     }
+
+    /* Hide Django's default Add appointment button that covers the nice pink button */
+    .object-tools {
+        display: none !important;
+    }
+
+    /* Keep our beautiful pink manage button visible */
+    .content-title div {
+        display: flex !important;
+    }
 </style>
 {% endblock %}
