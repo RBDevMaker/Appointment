@@ -89,8 +89,12 @@
         border: 2px solid var(--rose-gold) !important;
     }
 
+    /* Hide Welcome and admin text */
+    #user-tools strong {
+        display: none !important;
+    }
+
     #user-tools a,
-    #user-tools strong,
     #user-tools span {
         color: var(--rose-gold) !important;
         font-size: 1.1rem !important;
@@ -105,7 +109,6 @@
     }
 
     #user-tools a:hover,
-    #user-tools strong:hover,
     #user-tools span:hover {
         background: linear-gradient(135deg, var(--rose-gold) 0%, #b8941f 100%) !important;
         color: white !important;
