@@ -69,7 +69,7 @@ def populate_services(apps, schema_editor):
         },
         {
             'service_name': 'Protein (Aphogee)',
-            'description': 'Includes a deep conditioner. Pricing might increase based on density/length of hair. Short hair $45, Medium length hair $50, Long $60+.',
+            'description': 'Includes a deep conditioner. Pricing might increase based on density/length of hair. Short hair $45, Long $60+.',
             'price': 45.00,
             'duration': 45  # 45 min
         },
