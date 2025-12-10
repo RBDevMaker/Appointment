@@ -90,7 +90,8 @@
     }
 
     #user-tools a,
-    #user-tools strong {
+    #user-tools strong,
+    #user-tools span {
         color: var(--rose-gold) !important;
         font-size: 1.1rem !important;
         font-weight: 600 !important;
@@ -100,23 +101,12 @@
         transition: all 0.3s ease !important;
         display: inline-block !important;
         margin: 0 5px !important;
-    }
-
-    #user-tools a:hover {
-        background: linear-gradient(135deg, var(--rose-gold) 0%, #b8941f 100%) !important;
-        color: white !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4) !important;
-    }
-
-    #user-tools strong {
         background: transparent !important;
-        color: var(--rose-gold) !important;
-        border-radius: 15px !important;
-        padding: 8px 12px !important;
     }
 
-    #user-tools strong:hover {
+    #user-tools a:hover,
+    #user-tools strong:hover,
+    #user-tools span:hover {
         background: linear-gradient(135deg, var(--rose-gold) 0%, #b8941f 100%) !important;
         color: white !important;
         transform: translateY(-2px) !important;
