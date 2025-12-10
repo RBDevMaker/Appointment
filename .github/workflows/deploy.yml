@@ -44,6 +44,6 @@ jobs:
 
       - name: Deploy to App Runner
         run: |
-          aws apprunner start-deployment \
-            --service-arn $(aws apprunner list-services --region $AWS_REGION --query "ServiceSummaryList[?ServiceName=='$APP_RUNNER_SERVICE'].ServiceArn" --output text) \
-            --region $AWS_REGION
+          SERVICE_ARN="arn:aws:apprunner:us-east-1:995507554189:service/luxe-hair-studio/513fe6c2a259456b9704391c45c11b94"
+          echo "Deploying to service: $SERVICE_ARN"
+          aws apprunner start-deployment --service-arn $SERVICE_ARN --region $AWS_REGION
