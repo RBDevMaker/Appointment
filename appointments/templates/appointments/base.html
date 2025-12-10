@@ -230,10 +230,32 @@
     {% block content %}{% endblock %}
   </div>
   <div class="container">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-      <div class="col-md-4 d-flex align-items-center">
-        <span class="mb-3 mb-md-0 text-body-secondary"><small class="text-muted">Time in Los Angeles <small>{% now
-              "SHORT_DATETIME_FORMAT" %}</small></span>
+    <footer class="py-4 my-4"
+      style="border-top: 3px solid var(--rose-gold); background: linear-gradient(135deg, #ffd4e5 0%, #ffe8f0 100%); border-radius: 15px;">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-geo-alt-fill me-2" style="color: var(--rose-gold); font-size: 1.2rem;"></i>
+            <div>
+              <p class="mb-1" style="color: var(--rose-gold); font-weight: 600; font-size: 0.95rem;">
+                Luxe Hair Studio - Los Angeles, CA
+              </p>
+              <p class="mb-0" style="color: var(--primary-color); font-size: 0.9rem;">
+                <i class="bi bi-clock me-1"></i>Current Time: {% now "l, F j, Y - g:i A" %}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <div class="d-flex flex-column align-items-md-end">
+            <p class="mb-1" style="color: var(--rose-gold); font-weight: 600; font-size: 0.95rem;">
+              <i class="bi bi-heart-fill me-1"></i>Your Beauty, Our Passion
+            </p>
+            <p class="mb-0" style="color: var(--primary-color); font-size: 0.85rem;">
+              © 2025 Luxe Hair Studio. All rights reserved.
+            </p>
+          </div>
+        </div>
       </div>
     </footer>
   </div>
