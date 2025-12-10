@@ -68,8 +68,11 @@ def index(request, service_id=None, service_ids=None, hairdresser_id=None, date_
 
     # Try to get announcements from DynamoDB, but don't fail if not available
     try:
-        announcements = dynamodb.scan(TableName="DEV_Announcement")
-        context["announcements"] = [a['Contents']['S'] for a in announcements['Items']]
+        if dynamodb is not None:
+            announcements = dynamodb.scan(TableName="DEV_Announcement")
+            context["announcements"] = [a['Contents']['S'] for a in announcements['Items']]
+        else:
+            context["announcements"] = []
     except Exception:
         context["announcements"] = []
 
