@@ -69,12 +69,17 @@ def index(request, service_id=None, service_ids=None, hairdresser_id=None, date_
     # Try to get announcements from DynamoDB, but don't fail if not available
     try:
         if dynamodb is not None:
+            print("DynamoDB client exists, attempting to fetch announcements...")
             announcements = dynamodb.scan(TableName="DEV_Announcement")
-            context["announcements"] = [a['Contents']['S'] for a in announcements['Items']]
+            announcement_list = [a['Contents']['S'] for a in announcements['Items']]
+            print(f"Successfully fetched {len(announcement_list)} announcements: {announcement_list}")
+            context["announcements"] = announcement_list
         else:
-            context["announcements"] = []
-    except Exception:
-        context["announcements"] = []
+            print("DynamoDB client is None - AWS credentials not configured")
+            context["announcements"] = ["DEBUG: DynamoDB client not available"]
+    except Exception as e:
+        print(f"Error fetching announcements: {str(e)}")
+        context["announcements"] = [f"DEBUG: Error fetching announcements - {str(e)}"]
 
     # Handle both single service and multiple services
     selected_services = []
