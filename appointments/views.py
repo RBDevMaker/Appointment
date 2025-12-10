@@ -138,6 +138,10 @@ def index(request, service_id=None, service_ids=None, hairdresser_id=None, date_
                 context["total_price"] = sum(s.price for s in context["selected_services"])
                 context["total_duration"] = total_duration
 
+    # Clear booking success data after displaying it once
+    if 'booking_success' in request.session:
+        del request.session['booking_success']
+    
     return render(request, "appointments/index.html", context)
 
 def create(request):
@@ -206,12 +210,27 @@ def create(request):
         service_names = [s.service_name for s in services]
         total_price = sum(s.price for s in services)
         
-        cancel_info = "\n".join(cancel_urls)
+        # Create structured cancellation data for template
+        cancellation_data = []
+        for cancel_url in cancel_urls:
+            service_name, url = cancel_url.split(': ', 1)
+            token = url.split('/')[-2]  # Extract token from URL
+            cancellation_data.append({
+                'service_name': service_name,
+                'url': url,
+                'token': token
+            })
         
-        messages.info(
+        # Store cancellation data in session for template access
+        request.session['booking_success'] = {
+            'services': service_names,
+            'total_price': float(total_price),
+            'cancellation_data': cancellation_data
+        }
+        
+        messages.success(
             request, 
-            f"Your appointments have been created for: {', '.join(service_names)}. "
-            f"Total: ${total_price}. Cancellation links: {cancel_info}"
+            f"✅ Your appointments have been created successfully!"
         )
 
     return HttpResponseRedirect(reverse("index"))

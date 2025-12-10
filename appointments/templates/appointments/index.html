@@ -3,8 +3,53 @@
 {% block content %}
 {% if messages %}
 {% for message in messages %}
-<div class="alert alert-primary" role="alert">
-    {{ message }}
+<div class="alert alert-success border-0 shadow-sm" role="alert"
+    style="background: linear-gradient(135deg, #d4edda 0%, #e8f5e9 100%); border-left: 5px solid var(--primary-color) !important;">
+    <div class="d-flex align-items-center mb-2">
+        <i class="bi bi-check-circle-fill me-2" style="color: var(--primary-color); font-size: 1.2rem;"></i>
+        <strong>{{ message }}</strong>
+    </div>
+
+    {% if request.session.booking_success %}
+    <div class="booking-details mt-3 p-3 rounded"
+        style="background: rgba(255, 255, 255, 0.7); border: 2px solid var(--accent-color);">
+        <div class="row">
+            <div class="col-md-8">
+                <h6 style="color: var(--rose-gold); margin-bottom: 10px;">
+                    <i class="bi bi-calendar-check me-1"></i>Appointment Details:
+                </h6>
+                <p class="mb-2"><strong>Services:</strong> {{ request.session.booking_success.services|join:", " }}</p>
+                <p class="mb-3"><strong>Total:</strong> ${{ request.session.booking_success.total_price }}</p>
+
+                <div class="cancellation-section">
+                    <h6 style="color: #e74c3c; margin-bottom: 10px;">
+                        <i class="bi bi-exclamation-triangle me-1"></i>Need to Cancel?
+                    </h6>
+                    {% for cancel_data in request.session.booking_success.cancellation_data %}
+                    <div class="mb-2">
+                        <span class="me-2"><strong>{{ cancel_data.service_name }}:</strong></span>
+                        <a href="{{ cancel_data.url }}" class="btn btn-sm btn-outline-danger"
+                            style="border: 2px solid #e74c3c; color: #e74c3c; font-weight: 600; transition: all 0.3s ease;"
+                            onmouseover="this.style.background='#e74c3c'; this.style.color='white'"
+                            onmouseout="this.style.background='transparent'; this.style.color='#e74c3c'">
+                            <i class="bi bi-calendar-x me-1"></i>Cancel This Service
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="p-3 rounded"
+                    style="background: linear-gradient(135deg, var(--accent-color) 0%, #fff5f8 100%);">
+                    <i class="bi bi-bookmark-heart" style="font-size: 2rem; color: var(--primary-color);"></i>
+                    <p class="mt-2 mb-0" style="color: var(--rose-gold); font-weight: 600; font-size: 0.9rem;">
+                        Save this page or screenshot for your records!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endfor %}
 {% endif %}
