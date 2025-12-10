@@ -232,9 +232,19 @@ def create(request):
             'cancellation_data': cancellation_data
         }
         
+        # Create detailed success message
+        hairdresser_name = f"{hairdresser.first_name} {hairdresser.last_name}"
+        appointment_date = start_datetime.strftime("%A, %B %d, %Y")
+        appointment_time = start_datetime.strftime("%I:%M %p")
+        
         messages.success(
             request, 
-            f"✅ Your appointments have been created successfully!"
+            f"✅ Your appointments have been created successfully! "
+            f"Services: {', '.join(service_names)} | "
+            f"Stylist: {hairdresser_name} | "
+            f"Date: {appointment_date} | "
+            f"Time: {appointment_time} | "
+            f"Total: ${total_price}"
         )
 
     return HttpResponseRedirect(reverse("index"))
