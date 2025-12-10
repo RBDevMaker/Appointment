@@ -221,10 +221,14 @@ def create(request):
                 'token': token
             })
         
-        # Store cancellation data in session for template access
+        # Store comprehensive appointment data in session for template access
         request.session['booking_success'] = {
             'services': service_names,
             'total_price': float(total_price),
+            'hairdresser_name': f"{hairdresser.first_name} {hairdresser.last_name}",
+            'appointment_date': start_datetime.strftime("%A, %B %d, %Y"),
+            'appointment_time': start_datetime.strftime("%I:%M %p"),
+            'customer_contact': customer_contact,
             'cancellation_data': cancellation_data
         }
         

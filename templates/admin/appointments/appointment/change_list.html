@@ -1,0 +1,42 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block content_title %}
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+    <h1 style="color: var(--rose-gold); font-family: 'Great Vibes', cursive; font-size: 2.5rem; margin: 0;">
+        <i class="bi bi-calendar-check me-2" style="color: var(--primary-pink);"></i>View Appointments
+    </h1>
+    <div
+        style="background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%); padding: 10px 20px; border-radius: 25px; border: 3px solid var(--primary-pink);">
+        <span style="color: var(--primary-pink); font-weight: 600;">
+            <i class="bi bi-info-circle me-1"></i>Manage all salon appointments
+        </span>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<style>
+    :root {
+        --primary-pink: #f5a3b8;
+        --rose-gold: #d4af37;
+    }
+
+    .results {
+        background: linear-gradient(135deg, rgba(245, 163, 184, 0.05) 0%, rgba(212, 175, 55, 0.05) 100%) !important;
+        border-radius: 10px !important;
+        padding: 15px !important;
+        margin-top: 20px !important;
+    }
+
+    .paginator {
+        background: linear-gradient(135deg, #ffd4e5 0%, #ffe8f0 100%) !important;
+        border-radius: 8px !important;
+        padding: 10px !important;
+        border: 2px solid var(--rose-gold) !important;
+    }
+</style>
+{% endblock %}

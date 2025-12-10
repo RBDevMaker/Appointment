@@ -25,3 +25,8 @@ class AppointmentAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.select_related('hairdresser', 'service')
+    
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['title'] = 'View Appointments'
+        return super().changelist_view(request, extra_context=extra_context)

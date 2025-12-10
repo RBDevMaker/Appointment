@@ -4,10 +4,10 @@
 {% if messages %}
 {% for message in messages %}
 <div class="alert alert-success border-0 shadow-sm" role="alert"
-    style="background: linear-gradient(135deg, #d4edda 0%, #e8f5e9 100%); border-left: 5px solid var(--primary-color) !important;">
+    style="background: linear-gradient(135deg, #ffd4e5 0%, #ffe8f0 100%); border-left: 5px solid var(--primary-color) !important;">
     <div class="d-flex align-items-center mb-2">
         <i class="bi bi-check-circle-fill me-2" style="color: var(--primary-color); font-size: 1.2rem;"></i>
-        <strong>{{ message }}</strong>
+        <strong style="color: var(--rose-gold);">{{ message }}</strong>
     </div>
 
     {% if request.session.booking_success %}
@@ -15,27 +15,61 @@
         style="background: rgba(255, 255, 255, 0.7); border: 2px solid var(--accent-color);">
         <div class="row">
             <div class="col-md-8">
-                <h6 style="color: var(--rose-gold); margin-bottom: 10px;">
-                    <i class="bi bi-calendar-check me-1"></i>Appointment Details:
+                <h6 style="color: var(--rose-gold); margin-bottom: 15px; font-size: 1.1rem;">
+                    Appointment Details:
                 </h6>
-                <p class="mb-2"><strong>Services:</strong> {{ request.session.booking_success.services|join:", " }}</p>
-                <p class="mb-3"><strong>Total:</strong> ${{ request.session.booking_success.total_price }}</p>
+                <div class="appointment-info p-3 rounded mb-3"
+                    style="background: linear-gradient(135deg, var(--accent-color) 0%, #fff5f8 100%); border: 2px solid var(--primary-color);">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-2" style="color: var(--rose-gold);"><strong>Services:</strong></p>
+                            <p class="mb-3" style="margin-left: 20px;">{{
+                                request.session.booking_success.services|join:", " }}</p>
 
-                <div class="cancellation-section">
-                    <h6 style="color: #e74c3c; margin-bottom: 10px;">
-                        <i class="bi bi-exclamation-triangle me-1"></i>Need to Cancel?
+                            <p class="mb-2" style="color: var(--rose-gold);"><strong>Stylist:</strong></p>
+                            <p class="mb-3" style="margin-left: 20px;">{{
+                                request.session.booking_success.hairdresser_name }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-2" style="color: var(--rose-gold);"><strong>Date:</strong></p>
+                            <p class="mb-3" style="margin-left: 20px;">{{
+                                request.session.booking_success.appointment_date }}</p>
+
+                            <p class="mb-2" style="color: var(--rose-gold);"><strong>Time:</strong></p>
+                            <p class="mb-3" style="margin-left: 20px;">{{
+                                request.session.booking_success.appointment_time }}</p>
+                        </div>
+                    </div>
+                    <div class="text-center pt-2" style="border-top: 2px solid var(--primary-color);">
+                        <h5 style="color: var(--rose-gold); margin: 0;">
+                            Total: ${{ request.session.booking_success.total_price }}
+                        </h5>
+                    </div>
+                </div>
+
+                <div class="cancellation-section p-3 rounded"
+                    style="background: linear-gradient(135deg, #ffe8e8 0%, #fff5f5 100%); border: 2px solid #e74c3c; margin-top: 15px;">
+                    <h6 style="color: #e74c3c; margin-bottom: 15px; text-align: center;">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>Need to Cancel Your Appointment?
                     </h6>
                     {% for cancel_data in request.session.booking_success.cancellation_data %}
-                    <div class="mb-2">
-                        <span class="me-2"><strong>{{ cancel_data.service_name }}:</strong></span>
-                        <a href="{{ cancel_data.url }}" class="btn btn-sm btn-outline-danger"
-                            style="border: 2px solid #e74c3c; color: #e74c3c; font-weight: 600; transition: all 0.3s ease;"
-                            onmouseover="this.style.background='#e74c3c'; this.style.color='white'"
-                            onmouseout="this.style.background='transparent'; this.style.color='#e74c3c'">
-                            <i class="bi bi-calendar-x me-1"></i>Cancel This Service
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-2 rounded"
+                        style="background: rgba(255, 255, 255, 0.7); border: 1px solid #e74c3c;">
+                        <span style="color: #2c3e50; font-weight: 600;">{{ cancel_data.service_name }}</span>
+                        <a href="{{ cancel_data.url }}" class="btn btn-danger"
+                            style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); border: none; font-weight: 600; padding: 8px 16px; border-radius: 20px; transition: all 0.3s ease; text-decoration: none;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(231, 76, 60, 0.4)'"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                            <i class="bi bi-x-circle me-1"></i>Cancel
                         </a>
                     </div>
                     {% endfor %}
+                    <div class="text-center mt-3">
+                        <small style="color: #7f8c8d; font-style: italic;">
+                            <i class="bi bi-info-circle me-1"></i>Click "Cancel" to confirm cancellation of that
+                            specific service
+                        </small>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4 text-center">
