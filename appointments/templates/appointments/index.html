@@ -31,8 +31,13 @@
                     <li>${{service.price}}</li>
                     <li>{{service.duration}} minutes</li>
                 </ul>
-                <a class="w-100 btn btn-lg {% if service.service_id == selected_service_id %}btn-primary{% else %}btn-outline-primary{% endif %}"
-                    href="{% relative_url 'index-service' service.service_id %}#hairdresser">Select</a>
+                <button type="button"
+                    class="w-100 btn btn-lg service-select-btn {% if service.service_id == selected_service_id %}btn-primary{% else %}btn-outline-primary{% endif %}"
+                    data-service-id="{{service.service_id}}" data-service-name="{{service.service_name}}"
+                    data-service-price="{{service.price}}">
+                    <span class="select-text">Select</span>
+                    <i class="bi bi-check-circle-fill selected-icon d-none"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -104,5 +109,83 @@
 </form>
 <hr>
 {% endif %}
+
+
+<div id="selected-services" class="mt-4 d-none">
+    <h4>Selected Services</h4>
+    <div id="selected-services-list" class="mb-3"></div>
+    <div class="d-flex justify-content-between align-items-center">
+        <strong>Total: $<span id="total-price">0.00</span></strong>
+        <a href="#hairdresser" class="btn btn-primary" id="continue-btn">Continue to Stylists</a>
+    </div>
+</div>
+
+<script>
+    let selectedServices = [];
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const serviceButtons = document.querySelectorAll('.service-select-btn');
+        const selectedServicesDiv = document.getElementById('selected-services');
+        const selectedServicesList = document.getElementById('selected-services-list');
+        const totalPriceSpan = document.getElementById('total-price');
+
+        serviceButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const serviceId = this.dataset.serviceId;
+                const serviceName = this.dataset.serviceName;
+                const servicePrice = parseFloat(this.dataset.servicePrice);
+
+                const existingIndex = selectedServices.findIndex(s => s.id === serviceId);
+
+                if (existingIndex > -1) {
+                    // Remove service
+                    selectedServices.splice(existingIndex, 1);
+                    this.classList.remove('btn-primary');
+                    this.classList.add('btn-outline-primary');
+                    this.querySelector('.select-text').textContent = 'Select';
+                    this.querySelector('.selected-icon').classList.add('d-none');
+                } else {
+                    // Add service
+                    selectedServices.push({
+                        id: serviceId,
+                        name: serviceName,
+                        price: servicePrice
+                    });
+                    this.classList.remove('btn-outline-primary');
+                    this.classList.add('btn-primary');
+                    this.querySelector('.select-text').textContent = 'Selected';
+                    this.querySelector('.selected-icon').classList.remove('d-none');
+                }
+
+                updateSelectedServicesDisplay();
+            });
+        });
+
+        function updateSelectedServicesDisplay() {
+            if (selectedServices.length === 0) {
+                selectedServicesDiv.classList.add('d-none');
+                return;
+            }
+
+            selectedServicesDiv.classList.remove('d-none');
+
+            let html = '';
+            let total = 0;
+
+            selectedServices.forEach(service => {
+                html += `<span class="badge bg-primary me-2 mb-2">${service.name} - $${service.price}</span>`;
+                total += service.price;
+            });
+
+            selectedServicesList.innerHTML = html;
+            totalPriceSpan.textContent = total.toFixed(2);
+
+            // Update continue button with selected service IDs
+            const continueBtn = document.getElementById('continue-btn');
+            const serviceIds = selectedServices.map(s => s.id).join(',');
+            continueBtn.href = `/services/${serviceIds}/#hairdresser`;
+        }
+    });
+</script>
 
 {% endblock %}
