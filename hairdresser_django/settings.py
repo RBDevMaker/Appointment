@@ -45,8 +45,21 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.elb.amazonaws.com',
     'http://127.0.0.1',
     'http://localhost',
-    'https://*.cloudfront.net'
+    'https://*.cloudfront.net',
+    'http://luxe-hair-studio-alb-738301618.us-east-1.elb.amazonaws.com',
+    'https://luxe-hair-studio-alb-738301618.us-east-1.elb.amazonaws.com'
 ]
+
+# Additional CSRF settings for load balancer
+CSRF_COOKIE_SECURE = False  # Set to False for HTTP ALB
+CSRF_COOKIE_HTTPONLY = False
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_SAMESITE = 'Lax'
+
+# CSRF settings for production deployment
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
 
 
 # Application definition

@@ -56,7 +56,7 @@
                 <h3 class="card-title">{{hairdresser.first_name}} {{hairdresser.last_name}}</h3>
                 <i class="bi bi-file-person" style="font-size: 4rem; "></i>
                 <a class="w-100 btn btn-lg {% if hairdresser.hairdresser_id == selected_hairdresser_id %}btn-primary{% else %}btn-outline-primary{% endif %}"
-                    href="{% relative_url 'index-hairdresser' selected_service_id hairdresser.hairdresser_id %}#date">Select</a>
+                    href="{% if selected_service_ids %}{% relative_url 'index-services-hairdresser' selected_service_ids|join:',' hairdresser.hairdresser_id %}{% else %}{% relative_url 'index-hairdresser' selected_service_id hairdresser.hairdresser_id %}{% endif %}#date">Select</a>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
 
 {% for date in dates_all %}
 <a class="btn {% if date.1 == selected_date %}btn-primary{% else %}btn-outline-primary{% endif %}"
-    href="{% relative_url 'index-date' selected_service_id selected_hairdresser_id date.1 %}#time">
+    href="{% if selected_service_ids %}{% relative_url 'index-services-date' selected_service_ids|join:',' selected_hairdresser_id date.1 %}{% else %}{% relative_url 'index-date' selected_service_id selected_hairdresser_id date.1 %}{% endif %}#time">
     {{date.0}}
 </a>
 {% endfor %}
@@ -82,11 +82,29 @@
 
 {% if start_times_all %}
 <h2 id="time">Time</h2>
+
+{% if selected_services %}
+<div class="alert alert-info mb-3">
+    <h5>Selected Services:</h5>
+    <ul class="mb-2">
+        {% for service in selected_services %}
+        <li>{{ service.service_name }} - ${{ service.price }} ({{ service.duration }} min)</li>
+        {% endfor %}
+    </ul>
+    <strong>Total: ${{ total_price }} | Duration: {{ total_duration }} minutes</strong>
+</div>
+{% endif %}
+
 <p>{{start_times_available_count}} start times available</p>
 
 <form method="post" action="{% relative_url 'create' %}">
     {% csrf_token %}
+    {% if selected_service_ids %}
+    <input type="hidden" name="services"
+        value="{% for sid in selected_service_ids %}{{ sid }}{% if not forloop.last %},{% endif %}{% endfor %}">
+    {% else %}
     <input type="hidden" name="service" value="{{selected_service_id}}">
+    {% endif %}
     <input type="hidden" name="hairdresser" value="{{selected_hairdresser_id}}">
     <input type="hidden" name="date" value="{{selected_date}}">
 
@@ -183,7 +201,7 @@
             // Update continue button with selected service IDs
             const continueBtn = document.getElementById('continue-btn');
             const serviceIds = selectedServices.map(s => s.id).join(',');
-            continueBtn.href = `/services/${serviceIds}/#hairdresser`;
+            continueBtn.href = `{% url 'index-services' 'PLACEHOLDER' %}`.replace('PLACEHOLDER', serviceIds) + '#hairdresser';
         }
     });
 </script>

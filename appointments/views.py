@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import messages
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 import boto3
 from botocore.exceptions import NoRegionError
 
@@ -43,7 +45,7 @@ def build_start_times(day_start, service_duration, blocked_times):
         )
     return start_times
 
-def index(request, service_id=None, hairdresser_id=None, date_string=None):
+def index(request, service_id=None, service_ids=None, hairdresser_id=None, date_string=None):
     "View for selecting service, hairdresser, date and time"
     services = Service.objects.all()
     context = {"services_all": services}
@@ -55,8 +57,19 @@ def index(request, service_id=None, hairdresser_id=None, date_string=None):
     except Exception:
         context["announcements"] = []
 
+    # Handle both single service and multiple services
+    selected_services = []
     if service_id:
+        selected_services = [service_id]
         context["selected_service_id"] = service_id
+    elif service_ids:
+        try:
+            selected_services = [int(sid) for sid in service_ids.split(',') if sid.strip()]
+            context["selected_service_ids"] = selected_services
+        except ValueError:
+            selected_services = []
+
+    if selected_services:
         context["hairdressers_all"] = Hairdresser.objects.all()
 
         if hairdresser_id:
@@ -88,57 +101,101 @@ def index(request, service_id=None, hairdresser_id=None, date_string=None):
                 day_start = parsed_datetime.replace(
                     hour=9, minute=0, second=0, microsecond=0
                 )
-                service_duration = Service.objects.get(service_id=service_id).duration
+                
+                # Calculate total duration for multiple services
+                total_duration = sum(
+                    Service.objects.get(service_id=sid).duration 
+                    for sid in selected_services
+                )
+                
                 start_times = build_start_times(
-                    day_start, service_duration, blocked_times
+                    day_start, total_duration, blocked_times
                 )
 
                 context["start_times_all"] = start_times
                 context["start_times_available_count"] = len(
                     [t for t in start_times if not t["is_blocked"]]
                 )
+                
+                # Add selected services info for display
+                context["selected_services"] = Service.objects.filter(service_id__in=selected_services)
+                context["total_price"] = sum(s.price for s in context["selected_services"])
+                context["total_duration"] = total_duration
 
     return render(request, "appointments/index.html", context)
 
 def create(request):
     "View for creating an appointment"
     if request.method == "POST":
-        service_id = request.POST.get("service")
+        service_ids_str = request.POST.get("services")  # Changed from "service" to "services"
         hairdresser_id = request.POST.get("hairdresser")
         date_string = request.POST.get("date")
         appointment_time = request.POST.get("appointment_time")
         customer_contact = request.POST.get("customer_contact")
 
-        service = Service.objects.get(service_id=service_id)
+        # Parse service IDs
+        try:
+            service_ids = [int(sid) for sid in service_ids_str.split(',') if sid.strip()]
+        except (ValueError, AttributeError):
+            # Fallback to single service for backward compatibility
+            service_id = request.POST.get("service")
+            service_ids = [int(service_id)] if service_id else []
+
+        if not service_ids:
+            messages.error(request, "Please select at least one service.")
+            return HttpResponseRedirect(reverse("index"))
+
+        services = Service.objects.filter(service_id__in=service_ids)
         hairdresser = Hairdresser.objects.get(hairdresser_id=hairdresser_id)
+        
         start_datetime = timezone.make_aware(
             datetime.datetime.strptime(
                 date_string + " " + appointment_time, "%Y%m%d %I:%M %p"
             )
         )
-        end_datetime = start_datetime + datetime.timedelta(minutes=service.duration)
 
-        # Generate cancellation token
-        import secrets
-        cancellation_token = secrets.token_urlsafe(32)
+        # Create appointments for each service (sequential booking)
+        current_start = start_datetime
+        appointments = []
+        cancel_urls = []
 
-        appointment = Appointment.objects.create(
-            service=service,
-            hairdresser=hairdresser,
-            start_datetime=start_datetime,
-            end_datetime=end_datetime,
-            customer_contact=customer_contact,
-            cancellation_token=cancellation_token,
-        )
+        for service in services:
+            end_datetime = current_start + datetime.timedelta(minutes=service.duration)
+
+            # Generate cancellation token
+            import secrets
+            cancellation_token = secrets.token_urlsafe(32)
+
+            appointment = Appointment.objects.create(
+                service=service,
+                hairdresser=hairdresser,
+                start_datetime=current_start,
+                end_datetime=end_datetime,
+                customer_contact=customer_contact,
+                cancellation_token=cancellation_token,
+            )
+            
+            appointments.append(appointment)
+            
+            # Build cancellation URL
+            cancel_url = request.build_absolute_uri(
+                reverse("cancel", args=[cancellation_token])
+            )
+            cancel_urls.append(f"{service.service_name}: {cancel_url}")
+            
+            # Next service starts when this one ends
+            current_start = end_datetime
+
+        # Create summary message
+        service_names = [s.service_name for s in services]
+        total_price = sum(s.price for s in services)
         
-        # Build cancellation URL
-        cancel_url = request.build_absolute_uri(
-            reverse("cancel", args=[cancellation_token])
-        )
+        cancel_info = "\n".join(cancel_urls)
         
         messages.info(
             request, 
-            f"Your appointment has been created. To cancel, visit: {cancel_url}"
+            f"Your appointments have been created for: {', '.join(service_names)}. "
+            f"Total: ${total_price}. Cancellation links: {cancel_info}"
         )
 
     return HttpResponseRedirect(reverse("index"))

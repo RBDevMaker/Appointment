@@ -1,0 +1,32 @@
+from django.db import migrations
+from django.contrib.auth.models import User
+
+
+def create_admin_user(apps, schema_editor):
+    """Create admin user with correct password"""
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser(
+            username='admin',
+            email='admin@luxehairstudio.com',
+            password='LuxHair2025!'
+        )
+    else:
+        # Update existing admin user password
+        admin_user = User.objects.get(username='admin')
+        admin_user.set_password('LuxHair2025!')
+        admin_user.save()
+
+
+def reverse_admin_user(apps, schema_editor):
+    """Remove admin user"""
+    User.objects.filter(username='admin').delete()
+
+
+class Migration(migrations.Migration):
+    dependencies = [
+        ('appointments', '0010_update_updo_service'),
+    ]
+
+    operations = [
+        migrations.RunPython(create_admin_user, reverse_admin_user),
+    ]
