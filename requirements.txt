@@ -4,3 +4,4 @@ whitenoise
 pymysql
 cryptography
 boto3
+django-allauth
