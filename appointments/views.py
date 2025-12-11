@@ -48,20 +48,7 @@ def build_start_times(day_start, service_duration, blocked_times):
 def index(request, service_id=None, service_ids=None, hairdresser_id=None, date_string=None):
     "View for selecting service, hairdresser, date and time"
     
-    # Auto-create admin user if it doesn't exist
-    from django.contrib.auth.models import User
-    import os
-    username = os.environ.get('ADMIN_USERNAME', 'admin')
-    password = os.environ.get('ADMIN_PASSWORD', 'LuxHair2025!')
-    if not User.objects.filter(username=username).exists() and password:
-        try:
-            User.objects.create_superuser(
-                username=username,
-                email=os.environ.get('ADMIN_EMAIL', 'admin@luxehairstudio.com'),
-                password=password
-            )
-        except Exception:
-            pass  # Ignore errors, admin creation is optional
+    # Demo mode admin user is handled by middleware and auth backend
     
     services = Service.objects.all()
     context = {"services_all": services}
@@ -279,21 +266,14 @@ def cancel(request, token):
         return HttpResponseRedirect(reverse("index"))
 
 def setup_admin(request):
-    """Create admin user - for initial setup only"""
-    from django.contrib.auth.models import User
-    import os
+    """Demo mode - admin access is automatically available"""
+    from django.http import HttpResponse
+    from django.conf import settings
     
-    username = os.environ.get('ADMIN_USERNAME', 'admin')
-    email = os.environ.get('ADMIN_EMAIL', 'admin@luxehairstudio.com')
-    password = os.environ.get('ADMIN_PASSWORD', 'LuxHair2025!')
-    
-    if User.objects.filter(username=username).exists():
-        return HttpResponse(f'Admin user "{username}" already exists!')
-    
-    User.objects.create_superuser(
-        username=username,
-        email=email,
-        password=password
-    )
-    
-    return HttpResponse(f'Admin user "{username}" created successfully! You can now login at /admin/')
+    if getattr(settings, 'DEMO_MODE', False):
+        return HttpResponse(
+            'Demo mode is enabled! Admin access is available without login at /admin/<br>'
+            'All visitors have full admin access for demonstration purposes.'
+        )
+    else:
+        return HttpResponse('Demo mode is disabled. Please configure admin access through environment variables.')

@@ -283,21 +283,34 @@
   </div>
 
 
-  <!-- Admin Credentials Modal -->
+  <!-- Admin Access Modal -->
   <div class="modal fade" id="adminCredentialsModal" tabindex="-1" aria-labelledby="adminCredentialsModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-sm">
       <div class="modal-content"
-        style="background: linear-gradient(135deg, #ffd4e5 0%, #ffe8f0 50%, #fff5f8 100%); border: 3px solid var(--rose-gold);">
+        style="background: linear-gradient(135deg, #ffd4e5 0%, #ffe8f0 50%, #fff5f8 100%); border: 3px solid var(--rose-gold); border-radius: 15px; box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);">
         <div class="modal-header"
-          style="background: linear-gradient(135deg, #d4af37 0%, #f5a3b8 100%); border-bottom: 2px solid var(--rose-gold);">
+          style="background: linear-gradient(135deg, #ffffff 0%, #f5a3b8 100%); border-bottom: 3px solid var(--rose-gold); border-radius: 12px 12px 0 0;">
           <h5 class="modal-title" id="adminCredentialsModalLabel"
-            style="color: white; font-weight: 700; font-family: 'Playfair Display', serif;">
-            <i class="bi bi-scissors me-2"></i>Admin Login Info
+            style="color: #d4af37; font-weight: 700; font-family: 'Playfair Display', serif; text-shadow: 2px 2px 4px rgba(255,255,255,0.5);">
+            <i class="bi bi-scissors me-2" style="color: #d4af37;"></i>Admin Access
           </h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            style="filter: invert(1) sepia(1) saturate(5) hue-rotate(175deg);"></button>
         </div>
-        <div class="modal-body text-center">
+        <div class="modal-body text-center"
+          style="background: linear-gradient(135deg, rgba(252, 228, 236, 0.3) 0%, rgba(255, 255, 255, 0.9) 100%); border-radius: 0 0 12px 12px;">
+          {% if DEMO_MODE %}
+          <div class="alert alert-warning mb-3"
+            style="border: 3px solid #d4af37; background: linear-gradient(135deg, #ffffff 0%, #f5a3b8 100%); color: #d4af37; box-shadow: 0 4px 12px rgba(245, 163, 184, 0.3); border-radius: 10px; font-weight: 600;">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            <strong>DEMO MODE</strong><br>
+            <small style="font-weight: normal;">Public access enabled - no login required!</small>
+          </div>
+          <p style="color: var(--rose-gold); font-weight: 600; margin-bottom: 1rem;">
+            Admin dashboard is publicly accessible for demonstration purposes.
+          </p>
+          {% else %}
           <div class="mb-3">
             <label class="form-label" style="color: var(--rose-gold); font-weight: 600;">Username:</label>
             <div class="alert alert-light mb-2"
@@ -309,9 +322,10 @@
             <label class="form-label" style="color: var(--rose-gold); font-weight: 600;">Password:</label>
             <div class="alert alert-light mb-2"
               style="border: 2px solid var(--primary-pink); font-family: monospace; background: rgba(255,255,255,0.9);">
-              <strong style="color: var(--rose-gold);">LuxHair2025!</strong>
+              <strong style="color: var(--rose-gold);">Contact admin for credentials</strong>
             </div>
           </div>
+          {% endif %}
           <div class="d-grid">
             <a href="/admin/" class="btn btn-primary btn-lg"
               style="background: linear-gradient(135deg, #ffd4e5 0%, #ffb3d1 100%); border: 3px solid var(--rose-gold); color: var(--rose-gold); font-weight: 600;">

@@ -19,6 +19,8 @@ run:
   env:
     - name: DEBUG
       value: "False"
+    - name: DEMO_MODE
+      value: "True"
     - name: BUSINESS_TYPE
       value: "hairdresser"
     - name: BUSINESS_NAME
@@ -35,11 +37,5 @@ run:
       value: "#fce4ec"
     - name: BACKGROUND_COLOR
       value: "#f0e6d8"
-    - name: ADMIN_USERNAME
-      value: "admin"
-    - name: ADMIN_EMAIL
-      value: "admin@luxehairstudio.com"
-    - name: ADMIN_PASSWORD
-      value: "LuxHair2025!"
     - name: SECRET_KEY
       value: "h070k21hg)+r+#5tdv1$73+=&jdxz&qxqh_8%tz6-*@6p)buh9"

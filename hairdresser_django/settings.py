@@ -32,6 +32,9 @@ BUSINESS_NAME = os.environ.get('BUSINESS_NAME', 'Hair Salon')
 PROVIDER_TITLE = os.environ.get('PROVIDER_TITLE', 'Hairdresser')  # or 'Nail Technician'
 PROVIDER_TITLE_PLURAL = os.environ.get('PROVIDER_TITLE_PLURAL', 'Hairdressers')  # or 'Nail Technicians'
 
+# Demo mode configuration - allows public access to admin
+DEMO_MODE = os.environ.get('DEMO_MODE', 'True') == 'True'
+
 # Color scheme configuration
 PRIMARY_COLOR = os.environ.get('PRIMARY_COLOR', '#f5a3b8')  # Default: pink
 SECONDARY_COLOR = os.environ.get('SECONDARY_COLOR', '#d4af37')  # Default: rose gold
@@ -85,6 +88,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'appointments.auth_backends.PublicAdminMiddleware',  # Auto-login for demo mode
     'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -216,6 +220,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Django Allauth Configuration
 SITE_ID = 1
 AUTHENTICATION_BACKENDS = [
+    'appointments.auth_backends.DemoAdminBackend',  # Demo mode authentication
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]

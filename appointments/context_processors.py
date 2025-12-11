@@ -12,4 +12,6 @@ def business_config(request):
         'SECONDARY_COLOR': settings.SECONDARY_COLOR,
         'ACCENT_COLOR': settings.ACCENT_COLOR,
         'BACKGROUND_COLOR': settings.BACKGROUND_COLOR,
+        'DEMO_MODE': getattr(settings, 'DEMO_MODE', False),
+        'settings': settings,  # Make settings available in templates
     }
